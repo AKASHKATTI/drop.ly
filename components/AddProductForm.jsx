@@ -41,13 +41,17 @@ const AddProductForm = ({user}) => {
     <>
     <form className= "w-full max-w-2xl mx-auto" onSubmit = {handleSubmit}>
         <div className =" flex flex-col sm:flex-row gap-2">
-            <Input  
-            placeholder ="Paste the Url.." 
-            type="url"
-            value ={url}
-            onChange={(e) => setUrl(e.target.value)}
-            className="h-12 text-base"
-            required />
+           <Input
+                id="url"
+                name="url"
+                type="url"
+                placeholder="Paste the URL..."
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                className="h-12 text-base"
+                autoComplete="url"
+                required
+                />
 
             <Button className="h-12 px-6 bg-orange-500 hover:bg-orange-600 text-md"
                     type ="submit" disabled={loading}>

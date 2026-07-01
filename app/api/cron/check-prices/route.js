@@ -42,7 +42,7 @@ export async function POST(request) {
         );
         
         if (userError || !user) {
-          console.log(`No user found for product ${product.id}, skipping.`);
+        //   console.log(`No user found for product ${product.id}, skipping.`);
           results.failed++;
           continue;
         }
@@ -51,7 +51,7 @@ export async function POST(request) {
         const productData = await scrapeProduct(product.url);
 
         if (!productData || !productData.currentPrice) {
-          console.log(`Could not find live price for product ${product.id}`);
+        //   console.log(`Could not find live price for product ${product.id}`);
           results.failed++;
           continue;
         }
@@ -60,12 +60,12 @@ export async function POST(request) {
         const oldPrice = Number(product.current_price);
 
         if (isNaN(newPrice) || isNaN(oldPrice)) {
-          console.log(`Invalid price values for product ${product.id}`);
+        //   console.log(`Invalid price values for product ${product.id}`);
           results.failed++;
           continue;
         }
 
-        console.log(`Product ${product.id}: old=${oldPrice}, new=${newPrice}`);
+        // console.log(`Product ${product.id}: old=${oldPrice}, new=${newPrice}`);
 
         // 3. Update products table
         const { error: updateError } = await supabase
@@ -134,7 +134,7 @@ export async function POST(request) {
       results,
     });
   } catch (error) {
-    console.error("Cron job root error:", error);
+    // console.error("Cron job root error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
