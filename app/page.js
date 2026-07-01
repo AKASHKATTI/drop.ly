@@ -77,7 +77,7 @@ export default  async function Home() {
       )}
 
         {user && Products.length > 0 && 
-        <section className = " max-w-7xl mx-auto px-4 pb-20">
+        <section className = " max-w-7xl mx-auto px-4 pb-20 mt-15">
 
           <div className= " flex items-center justify-between mb-6">
             <h3>
@@ -93,15 +93,10 @@ export default  async function Home() {
 
           </div>
 
-          <div className = " grid md:grid-col-2 gap-6 items-start">
-            {
-            Products.map((product) => (
-              <ProductCard  key = {product.id} product = {product}/>
-            ))
-
-            
-            }
-
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-5">
+            {Products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
           </div>
           
         </section>}
