@@ -4,6 +4,7 @@ import { createClient } from "@/lib/server";
 import {Rabbit , Shield , Bell, TrendingDown} from "lucide-react"
 import { getProducts } from "./action";
 import ProductCard from "@/components/ProductCard";
+import Footer from "@/components/Footer";
 
 
 export default  async function Home() {
@@ -126,6 +127,8 @@ export default  async function Home() {
 
 
       </section>
+
+      <Footer />
 
     </main>
   );
