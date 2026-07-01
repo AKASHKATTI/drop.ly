@@ -1,35 +1,97 @@
-﻿# Drop.ly
+﻿<div align="center">
+  <!-- <img src="./public/logo.svg" alt="Drop.ly Logo" width="120" /> -->
+  <h1 align="center">Drop.ly</h1>
+  <p align="center">
+    A modern price-tracking web application that helps you save money by monitoring product prices from any e-commerce URL and alerting you when they drop.
+  </p>
+</div>
 
-Drop.ly is a modern price-tracking web app that helps users monitor product prices from e-commerce URLs and receive alerts when prices fall. Users can add products, view live pricing data, track historical changes, and get email notifications for price drops.
+Drop.ly is a full-stack application built with Next.js that allows users to add products via URL, automatically scrapes the product details, and stores them in a database. A scheduled background job periodically checks for price changes and sends email notifications to users when a price drop is detected.
 
 ## Features
 
-- Add any product URL and extract the current price automatically
-- Track price history over time
-- View product cards with pricing details and images
-- Receive email alerts when a price drops
-- Authenticate users with Supabase
-- Run scheduled background checks with a cron endpoint
+Drop.ly comes packed with features designed for a seamless price-tracking experience:
+
+- **Smart Web Scraping**: Simply paste a product URL, and Drop.ly automatically extracts key information like name, price, and image using **Firecrawl**.
+- **User Authentication**: Secure user accounts and data with email and password authentication powered by **Supabase Auth**.
+- **Product Tracking Dashboard**: A clean, responsive dashboard where users can view all their tracked products at a glance.
+- **Detailed Price History**: An interactive chart for each product visualizes its price history, helping users identify trends.
+- **Automated Price Checks**: A cron job runs on a schedule to check for price updates on all tracked products, ensuring data is always current.
+- **Instant Email Alerts**: Receive beautifully formatted email notifications via **Resend** the moment a product's price drops.
+- **Modern, Performant UI**: Built with **Next.js 16** and **React 19**, styled with **Tailwind CSS** and **shadcn/ui** for a fast and accessible user experience.
 
 ## Tech Stack
 
-- Next.js 16
-- React 19
-- Supabase for authentication and database storage
-- Firecrawl for web scraping product data
-- Resend for email alerts
-- Tailwind CSS and shadcn/ui components
+The project leverages a modern, full-stack JavaScript ecosystem:
+
+- **Framework**: [Next.js](https://nextjs.org/) (using App Router)
+- **UI Library**: [React](https://react.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with [shadcn/ui](https://ui.shadcn.com/) for components
+- **Database & Auth**: [Supabase](https://supabase.io/) for PostgreSQL database, user authentication, and storage.
+- **Web Scraping**: [Firecrawl](https://firecrawl.dev/) for reliable data extraction from e-commerce sites.
+- **Email Notifications**: [Resend](https://resend.com/) for sending transactional price drop alerts.
+- **Deployment**: Hosted on [Vercel](https://vercel.com/).
 
 ## Project Structure
 
-- app/ - Next.js app router pages and API routes
-- components/ - UI components such as product cards, auth modal, and forms
-- lib/ - server/client utilities, scraping logic, and email integration
-- public/ - static assets
+The codebase is organized to maintain a clean separation of concerns:
+
+```
+./
+├── app/
+│   ├── (auth)/         # Authentication pages (login, signup)
+│   ├── (root)/         # Core application pages (dashboard)
+│   ├── api/            # API routes, including the cron endpoint
+│   ├── action.js       # Server Actions for database mutations
+│   └── layout.js       # Root layout
+├── components/
+│   ├── AuthModal.jsx   # User authentication component
+│   ├── PriceChart.jsx  # Chart for displaying price history
+│   └── ProductCard.jsx # Component for displaying a single product
+├── lib/
+│   ├── email.js        # Resend email sending logic
+│   ├── firecrawl.js    # Firecrawl scraping utility
+│   └── supabase.js     # Supabase client and helper functions
+└── public/             # Static assets like images and logos
+```
+
+## Database Schema
+
+The application relies on two primary tables in the Supabase PostgreSQL database:
+
+#### `products`
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `id` | `uuid` | Primary Key |
+| `user_id` | `uuid` | Foreign Key to `auth.users` |
+| `url` | `text` | The original product URL |
+| `name` | `text` | Product name |
+| `image_url` | `text` | URL of the product image |
+| `current_price` | `float8` | The most recently checked price |
+| `currency` | `text` | Price currency (e.g., "USD") |
+| `created_at` | `timestamptz` | Timestamp of creation |
+| `updated_at` | `timestamptz` | Timestamp of the last check |
+
+#### `price_history`
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `id` | `uuid` | Primary Key |
+| `product_id` | `uuid` | Foreign Key to `products.id` |
+| `price` | `float8` | The price at the time of check |
+| `checked_at` | `timestamptz` | Timestamp of the price check |
 
 ## Getting Started
 
-### 1. Install dependencies
+Follow these steps to set up and run the project locally.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/drop.ly.git
+cd drop.ly
+```
+
+### 2. Install Dependencies
 
 ```bash
 npm install
