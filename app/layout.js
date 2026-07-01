@@ -10,7 +10,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: 'DealDrop',
+  title: 'Drop.ly - Never Miss a Price Drop',
   description: 'Never Miss a Price Drop',
 };
 
